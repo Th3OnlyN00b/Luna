@@ -34,7 +34,7 @@ def process_message(msg):
     #
     #   It is not a bad idea for more computationally challenging functions to use AWS Lambda calls.
     commands = {
-        "help": """/md Hello! I'm Luna, a prototype bot for Amazon Chime. I'm a work in progress, so please report any bugs to smthcol@
+        "help": """/md Hello! I'm a prototype bot for Amazon Chime and my owner really should change this message! I'm a work in progress, so please report any bugs to my dev!
 My current commands are:
 * Help: brings up this menu"""
         #Additional commands can go here

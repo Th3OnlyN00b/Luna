@@ -418,7 +418,6 @@ if not using_pass:
     chime_login(driver, login_info["email"], login_info["password"])
 else:
     chime_login(driver, email_or_secret, pass_or_region)
-print("hello")
 wait.until(can_find(driver, "SortableList.RoomList__items"))
 chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
 bot = Luna(chat_room_name, driver, sys.argv[3].split('=')[1])
