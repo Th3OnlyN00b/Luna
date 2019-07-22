@@ -345,7 +345,7 @@ class Luna:
 
 def handle_arg_error(msg):
     print(msg)
-    print("Run 'Luna help' if needed.")
+    print("Run 'Luna.py help' if needed.")
     quit()
 ### PROGRAM START ###
 
@@ -355,12 +355,12 @@ if (len(sys.argv) == 2) and (sys.argv[1].lower() == "help"):
     1) Using AWS Secrets Manager through boto3
     2) Entering the login info for the bot account manually.
     
-To launch using the first method, run 'Luna headless=[1|0] browser=[chrome|firefox] bot_name=[bot name] secret_name=[secret_name] region=[region]'.
+To launch using the first method, run 'Luna.py headless=[1|0] browser=[chrome|firefox] bot_name=[bot name] secret_name=[secret_name] region=[region]'.
 Your secret (the one referenced by secret_name) MUST be in the format: 
     email: [bot login email]
     password: [bot login password]
     
-To launch using the second method, run 'Luna headless=[1|0] browser=[chrome|firefox] bot_name=[bot name] email=[bot login email] pass=[bot login password]'
+To launch using the second method, run 'Luna.py headless=[1|0] browser=[chrome|firefox] bot_name=[bot name] email=[bot login email] pass=[bot login password]'
 
 botname should be the name the bot has in chime, as it would look if someone were to @ your bot.""")
     quit()
