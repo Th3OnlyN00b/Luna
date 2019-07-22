@@ -6,6 +6,8 @@ Written by smthcol@. Please ping with bugs or errors in documentation.
 
 ## So you would like to make your own bot? Simply follow the steps bellow:
 
+Please note that this assumes you have [Python 3](https://www.python.org/downloads/) installed on your computer
+
 ## 1. Create an email account for your bot:
 * We usually use Gmail to make accouts, but it does not matter. 
 * DO NOT use your personal or work email for this. There may be reason to in future updates, but not yet.
@@ -47,7 +49,7 @@ Written by smthcol@. Please ping with bugs or errors in documentation.
 * Enter the email of the bot you wish to add.
 
 ## 6. Run your bot:
-* Run `py Luna help` for details on how to do this
+* Run `py Luna.py help` for details on how to do this
 * Enter the name of the chat room EXACTLY as it appears on Chime. Note that if you see "..." next to the name, you are not viewing the whole name.
 
 ## 7. Have fun!
