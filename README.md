@@ -6,7 +6,7 @@ Written by smthcol@. Please ping with bugs or errors in documentation.
 
 ## So you would like to make your own bot? Simply follow the steps bellow:
 
-Please note that this assumes you have [Python 3](https://www.python.org/downloads/) installed on your computer
+Please note that this assumes you have [Python 3.7](https://www.python.org/downloads/) or greater installed on your computer
 
 ## 1. Create an email account for your bot:
 * We usually use Gmail to make accouts, but it does not matter. 
