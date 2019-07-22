@@ -51,7 +51,7 @@ Please note that this assumes you have [Python 3.7](https://www.python.org/downl
 ## 6. Run your bot:
 * Run `pip install -U selenium` to make sure you have the latest version of selenium
 * Run `pip install Boto3` to make sure you have the latest version of Boto3
-* Run `py Luna.py help` for details on how to run your bot. If you're having an error saying "selenium not defined" or something, you've likely used pip from another python install (probably 2.X) and you'll need to use python 3's pip to install the previous two.  
+* Run `py Luna.py help` from the root folder for details on how to run your bot. If you're having an error saying "selenium not defined" or something, you've likely used pip from another python install (probably 2.X) and you'll need to use python 3's pip to install the previous two.  
 * Enter the name of the chat room EXACTLY as it appears on Chime. Note that if you see "..." next to the name, you are not viewing the whole name.
 
 ## 7. Have fun!
