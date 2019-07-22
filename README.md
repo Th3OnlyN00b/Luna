@@ -49,7 +49,9 @@ Please note that this assumes you have [Python 3](https://www.python.org/downloa
 * Enter the email of the bot you wish to add.
 
 ## 6. Run your bot:
-* Run `py Luna.py help` for details on how to do this
+* Run `pip install -U selenium` to make sure you have the latest version of selenium
+* Run `pip install Boto3` to make sure you have the latest version of Boto3
+* Run `py Luna.py help` for details on how to run your bot
 * Enter the name of the chat room EXACTLY as it appears on Chime. Note that if you see "..." next to the name, you are not viewing the whole name.
 
 ## 7. Have fun!
