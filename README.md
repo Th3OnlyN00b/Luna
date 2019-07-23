@@ -9,7 +9,7 @@ Written by smthcol@. Please ping with bugs or errors in documentation.
 Please note that this assumes you have [Python 3.7](https://www.python.org/downloads/) or greater installed on your computer
 
 ## 1. Create an email account for your bot:
-* We usually use Gmail to make accouts, but it does not matter. 
+* We usually use Gmail to make accounts, but it does not matter. 
 * DO NOT use your personal or work email for this. There may be reason to in future updates, but not yet.
 
 ## 2. Create a Chime account for your bot:
