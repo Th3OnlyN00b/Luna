@@ -101,8 +101,6 @@ class Luna:
         self.chat_room_name = chat_room_name
         self.driver = driver
         self.bot_name = bot_name
-        # A frozen set is like a normal hash set but you can't add things, so it gets optimized.
-        self.good_bot_msgs = frozenset(["who’s a good bot?", "who’s a good bot", "whos a good bot?", "whos a good bot"])
 
     def select_message_box(self):
         rooms = self.driver.find_element_by_class_name("SortableList.RoomList__items").find_elements_by_css_selector("span>div")
@@ -227,51 +225,25 @@ class Luna:
 
                     #That stupid edge case with markdown /md @[BotName] hello
                     if raw_message[start + len('</span>'):start+len('</span><div class="ChatMessage__markdown">')] == '<div class="ChatMessage__markdown">':
-                        self.send_message("I cannot read messages in that format! I can still echo markdown though, just use '@" + self.bot_name + " echo /md your_markdown_message'")
+                        self.send_message("I cannot read messages in that format!")
                     else:
                         #If people do "@BotName whatever"
                         if raw_message[start+len('</span>')] == " ":
                             refined_message = raw_message[start+len('</span> '):end]
-                            self.send_message(commands.process_message(refined_message))
+                            self.send_message(commands.process_message(refined_message, self.bot_name))
                         #If people don't put a space after '@BotName' i.e. "@BotName, hello"
                         else:
                             real_start = raw_message[start:].find(' ')
                             refined_message = raw_message[start+real_start+1:end]
-                            self.send_message(commands.process_message(refined_message))
+                            self.send_message(commands.process_message(refined_message, self.bot_name))
                 
                 #### Non-command responses ####
-
-                #Luna will say goodbye when someone leaves
-                elif msg_or_at[-23:] == "has left the chat room.":
-                    non_DM_msg = message_pieces[20].split(">")[1].split("<")[0]
-                    self.send_message("Goodbye, " + msg_or_at[:-23])
-
-                #Luna gets asked "who's a good bot"
-                elif msg_or_at.lower() in self.good_bot_msgs:
-                    options = {
-                        0: "It's me!",
-                        1: "Is it me?",
-                        2: "Could it be me?",
-                        3: "It's me it's me it's me it's GOTTA be me!",
-                        4: "I am!"
-                    }
-                    rand_int = random.randint(0, len(options)-1)
-                    self.send_message(options[rand_int])
-
-                #Someone wants to die
-                elif msg_or_at.lower() in constants.SUICIDE_LINES:
-                    self.send_message("/md Suicide is never the answer. You can find the [National Suicide Hotline here](http://www.suicidepreventionlifeline.org/), or call their 24/7 line: 1-800-273-8255")
-                
-                #Someone is acting like an idiot
-                elif msg_or_at[0:msg_or_at.find(" ")] == ("@"+self.bot_name):
-                    self.send_message("Am I smart enough to respond to this? Yes. But are you smart enough to actually @ me when you're sending messages? Also yes. Do it.")
-
-                #Someone sends a yubikey by mistake ### THIS REALLY NEEDS TO BE REPLACED WITH A REGEX
-                elif (re.match(r'^(?=.*e?c?n?e?ce?d)([b-l]|n|r|[t-v]){41,44}', msg_or_at) and (len(msg_or_at) > 40) and (len(msg_or_at) < 45)):
-                    self.send_message("#YubikeyReactsOnly")
-                #Message not meant for Luna
-                else:
-                    message_sent = False
+                else: 
+                    line = commands.process_raw(msg_or_at, self.bot_name)
+                    if len(line) == 0:
+                        message_sent = False
+                    else:
+                        self.send_message(line)
             except Exception as e: #Backup refresher in the event of environmental, social, economic, or structural collapse.
                 print("I ERRORED while parsing messages")
                 print(traceback.format_exc())

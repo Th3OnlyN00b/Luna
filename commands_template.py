@@ -3,8 +3,9 @@ import re
 import constants
 
 ###########################################################################################
-#   This is the file you should edit. The method below is the only required method, and   #
-#   it must return the string which the bot is supposed to say based on the given input.  #
+#   This is the file you should edit. The two methods below are the only required methods,#
+#   and this first one must return the string which the bot is supposed to say based on   #
+#   the given input.                                                                      #
 #                                                                                         #
 #   We've included a cleanup_message() function for you which removes any strange things  #
 #   left over from Chime's strangeness. It is not required, but highly recommended.       #
@@ -33,6 +34,7 @@ def process_message(msg):
     #   you had thousands of commands.
     #
     #   It is not a bad idea for more computationally challenging functions to use AWS Lambda calls.
+
     commands = {
         "help": """/md Hello! I'm a prototype bot for Amazon Chime and my owner really should change this message! I'm a work in progress, so please report any bugs to my dev!
 My current commands are:
@@ -52,6 +54,25 @@ My current commands are:
 
     print("sending" + msg)
     return msg
+
+###########################################################################################
+#   This is the second function you can edit. This function is to allow responses to non- #
+#   @ messages, such as "hello!"                                                          #
+#                                                                                         #
+#   This function is slightly different than the last, where whatever your returned would #
+#   be sent by the bot. In this function, if you do not desire to send a message, return  #
+#   the empty string (""). If you don't, your bot will respond to every single message    #
+#   sent in the chat.                                                                     #
+###########################################################################################
+
+def process_raw(msg, bot_name):
+    #If message meant for bot:
+
+    #respond to messages here
+
+    #Message not meant for Bot
+    return ""
+
 
 def cleanup_message(msg):
     #Fix hyperlink html garbage 
