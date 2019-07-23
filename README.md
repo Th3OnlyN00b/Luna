@@ -2,6 +2,8 @@
 
 Bot framework for Chime
 
+NOTE: We commonly use `py` to refer to python 3's run command. Note that it may be different on different systems
+
 Written by smthcol@. Please ping with bugs or errors in documentation.
 
 ## So you would like to make your own bot? Simply follow the steps bellow:
