@@ -6,7 +6,10 @@ Written by smthcol@. Please ping with bugs or errors in documentation.
 
 ## So you would like to make your own bot? Simply follow the steps bellow:
 
-Please note that this assumes you have [Python 3.6](https://www.python.org/downloads/) or greater installed on your computer. It may work with lower versions of 3.x, but they are not officially supported.
+Please note that this assumes you have:
+* [Python 3.6](https://www.python.org/downloads/) or greater installed on your computer. It may work with lower versions of 3.x, but they are not officially supported.
+* Firefox or Chrome installed **in their default directories**
+* Pip (which should come with Python in >= 3.4, but you may have uninstalled it or something.
 
 ## 0. Download Luna:
 * Download either the zip file for your OS, or clone the repo and open the folder for your OS.
@@ -63,6 +66,9 @@ Please note that this assumes you have [Python 3.6](https://www.python.org/downl
 
 ## 7. Have fun!
 * Your bot should be running now. Enjoy yourself!
+
+## Notes about running on AWS:
+* If you're planning to make a bot persist using AWS, Luna itself can run on a t2.micro ubuntu or linux instance, the same instance which is elegable for the free tier. In programming your bot, it is good practice to not exceed this requirement, and make any process heavy calls to AWS Lambda functions. For async calls such as those, be sure to make use of the `message_sender` function which is a param in both `process_raw` and `process_message`, unless you want to stall your bot until the function call completes.  
 
 ## TODO:
 * Setup away message functionality (User can use the bot on their own account to have it auto-reply to users with a preset message i.e. "I'm not in the office right now, and will be back on 9-13-19."
