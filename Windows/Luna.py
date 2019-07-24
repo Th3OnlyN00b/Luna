@@ -385,11 +385,58 @@ else:
 
 wait = WebDriverWait(driver, 100000) #Wait time-outs are stupid in this case. Just build better waits.
 
+email = ""
+password = ""
+
 if not using_pass:
+    print("Logging in without a password")
     login_info = json.loads(get_secret(email_or_secret, pass_or_region))
-    chime_login(driver, login_info["email"], login_info["password"])
+    email = login_info["email"]
+    password = login_info["password"]
+    chime_login(driver, email, password)
 else:
-    chime_login(driver, email_or_secret, pass_or_region)
+    print("Logging in with pasword")
+    email = email_or_secret
+    password = pass_or_region
+    chime_login(driver, email, password)
+
+a = 0
+
+time.sleep(3)
+
+while driver.title.find("Amazon Chime") == -1: #We got captcha'd or one-time-passworded
+    if driver.title == "Authentication required":
+        driver.find_element_by_id("continue").click()
+        wait.until(can_find(driver, "a-input-text.a-span12.cvf-widget-input.cvf-widget-input-code"))
+        code_box = driver.find_element_by_class_name("a-input-text.a-span12.cvf-widget-input.cvf-widget-input-code")
+        code = input("Please enter the one-time code from your email:\n")
+        code_box.send_keys(code)
+        driver.find_element_by_class_name("a-button-input").click()
+        time.sleep(1)
+        if(driver.title == "Authentication required"):
+            print("Incorrect code.")
+    else:
+        ## THE BELOW CODE DOES NOT WORK. For whatever reason, when selecting the button, 
+        print("############################################# Start copying below this line ######################################################")
+        print(driver.find_element_by_id("auth-captcha-image-container").get_attribute("outerHTML"))#page_source)#
+        if a != 0:
+            print(driver.find_element_by_class_name("a-alert-content").get_attribute("innerHTML"))
+        print("Please copy the above page code and paste it into a text file. Save it as [anything].html, then open it with a browser.")
+        driver.find_element_by_id("ap_password").send_keys(password)
+        captcha = input("Please enter the captcha from the page you loaded:\n")
+        driver.find_element_by_id("auth-captcha-guess").send_keys(captcha)
+        print(driver.find_element_by_id("auth-captcha-guess").get_attribute("value"))
+        action = ActionChains(driver)
+        action.key_down(Keys.TAB).key_up(Keys.TAB).key_down(Keys.TAB).key_up(Keys.TAB).key_down(Keys.SPACE).key_up(Keys.SPACE)
+        action.perform()
+        # driver.find_element_by_id("auth-captcha-guess").send_keys(Keys.ENTER)
+        #driver.find_element_by_class_name("a-button-inner").click()
+        time.sleep(3)
+        if driver.title.find("Amazon Chime") == -1:
+            print("Incorrect captcha")
+            a += 1
+
+print("Waiting until chat room list has loaded...")
 wait.until(can_find(driver, "SortableList.RoomList__items"))
 chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
 bot = Luna(chat_room_name, driver, sys.argv[3].split('=')[1])

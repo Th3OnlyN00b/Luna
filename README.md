@@ -6,7 +6,12 @@ Written by smthcol@. Please ping with bugs or errors in documentation.
 
 ## So you would like to make your own bot? Simply follow the steps bellow:
 
-Please note that this assumes you have [Python 3.7](https://www.python.org/downloads/) or greater installed on your computer
+Please note that this assumes you have [Python 3.6](https://www.python.org/downloads/) or greater installed on your computer. It may work with lower versions of 3.x, but they are not officially supported.
+
+## 0. Download Luna:
+* Download either the zip file for your OS, or clone the repo and open the folder for your OS.
+* If you downloaded a zip file, unzip it and open the folder.
+* This will be referenced as your **root folder**
 
 ## 1. Create an email account for your bot:
 * We usually use Gmail to make accounts, but it does not matter. 
@@ -51,7 +56,9 @@ Please note that this assumes you have [Python 3.7](https://www.python.org/downl
 ## 6. Run your bot:
 * Run `pip install -U selenium` to make sure you have the latest version of selenium
 * Run `pip install Boto3` to make sure you have the latest version of Boto3
-* Run `py Luna.py help` from the root folder for details on how to run your bot. If you're having an error saying "selenium not defined" or something, you've likely used pip from another python install (probably 2.X) and you'll need to use python 3's pip to install the previous two.  
+* Run `py Luna.py help` from the root folder for details on how to run your bot. If you're having an error saying "selenium not defined" or something, you've likely used pip from another python install (probably 2.X) and you'll need to use python 3's pip to install the previous two.
+* You may be asked to enter a one-time password (especially if you are on a new AWS instance). This happens sometimes, just check the bot's email and enter the code. Luna will handle the rest.
+* You might also be asked to copy a url into your browser and type the resultant captcha. This feature is currently broken. If you see this screen, wait a few hours and try again, the captcha will usually go away. Sorry!
 * Enter the name of the chat room EXACTLY as it appears on Chime. Note that if you see "..." next to the name, you are not viewing the whole name.
 
 ## 7. Have fun!

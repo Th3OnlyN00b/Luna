@@ -404,7 +404,6 @@ else:
     email = email_or_secret
     password = pass_or_region
     chime_login(driver, email, password)
-print("Waiting until chat room list has loaded...")
 
 a = 0
 
@@ -441,7 +440,8 @@ while driver.title.find("Amazon Chime") == -1: #We got captcha'd or one-time-pas
         if driver.title.find("Amazon Chime") == -1:
             print("Incorrect captcha")
             a += 1
-    
+
+print("Waiting until chat room list has loaded...")
 wait.until(can_find(driver, "SortableList.RoomList__items"))
 print("Chat room list has loaded.")
 chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
