@@ -230,16 +230,16 @@ class Luna:
                         #If people do "@BotName whatever"
                         if raw_message[start+len('</span>')] == " ":
                             refined_message = raw_message[start+len('</span> '):end]
-                            self.send_message(commands.process_message(refined_message, self.bot_name))
+                            self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
                         #If people don't put a space after '@BotName' i.e. "@BotName, hello"
                         else:
                             real_start = raw_message[start:].find(' ')
                             refined_message = raw_message[start+real_start+1:end]
-                            self.send_message(commands.process_message(refined_message, self.bot_name))
+                            self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
                 
                 #### Non-command responses ####
                 else: 
-                    line = commands.process_raw(msg_or_at, self.bot_name)
+                    line = commands.process_raw(msg_or_at, self.bot_name, self.send_message)
                     if len(line) == 0:
                         message_sent = False
                     else:
@@ -255,7 +255,7 @@ class Luna:
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     print("Refined message: " + refined_message)
                     print("Did a no-refresh recover")
-                    self.send_message(commands.process_message(refined_message))
+                    self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
                     print("Processed message after no-refresh recover")
 
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
@@ -271,7 +271,7 @@ class Luna:
                     big_message_list = driver.find_element_by_class_name("ChatMessageList.ChatContainer__messagesList")
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     print("Did a refresh recover")
-                    self.send_message(commands.process_message(refined_message))
+                    self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
                     print("Processed message after refresh recover")
 
             

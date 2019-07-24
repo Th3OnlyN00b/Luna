@@ -7,6 +7,13 @@ import constants
 #   and this first one must return the string which the bot is supposed to say based on   #
 #   the given input.                                                                      #
 #                                                                                         #
+#   The args for both functions are as follows:                                           # 
+#       msg: the message recieved by the bot.                                             #
+#       bot_name: the bot's name (for convenience)                                        #
+#       message_sender: this is a function which you can call on a string to have your    #
+#           bot send that message. This is used to respond to async calls, such as calls  #
+#           to AWS Lambda functions.                                                      #
+#                                                                                         #
 #   We've included a cleanup_message() function for you which removes any strange things  #
 #   left over from Chime's strangeness. It is not required, but highly recommended.       #
 #                                                                                         #
@@ -17,7 +24,7 @@ import constants
 #   Go have fun and make some bots!                                                       #
 ###########################################################################################
 
-def process_message(msg):
+def process_message(msg, bot_name, message_sender):
         
     print("Msg:\n" + msg)
     msg = cleanup_message(msg) #Not required, but highly recommended.
@@ -65,7 +72,7 @@ My current commands are:
 #   sent in the chat.                                                                     #
 ###########################################################################################
 
-def process_raw(msg, bot_name):
+def process_raw(msg, bot_name, message_sender):
     #If message meant for bot:
 
     #respond to messages here
