@@ -60,3 +60,4 @@ Please note that this assumes you have [Python 3.7](https://www.python.org/downl
 ## TODO:
 * Setup away message functionality (User can use the bot on their own account to have it auto-reply to users with a preset message i.e. "I'm not in the office right now, and will be back on 9-13-19."
 * Display chat room names before asking for the name of the chat room to join
+* Ocassionally when signing into a account from a new location, chime wants you to enter a one-time password. We need to implement a way to handle this. I've included the HTML files.
