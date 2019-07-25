@@ -11,7 +11,6 @@ from waits.can_find import can_find
 from waits.can_find_css import can_find_css
 from waits.text_filled import text_filled
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
-import constants
 import commands
 import re
 import traceback
@@ -179,7 +178,7 @@ class Luna:
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
                     print("failed no refresh-recover")
-                    driver.get(driver.current_url)
+                    driver.get("https://app.chime.aws")
                     #print("waiting round one")
                     #wait.until(EC.title_is("Amazon Chime")) #This has problems because the title (for whatever reason) is often changed to "(1) Amazon Chime" or some other number
                     print("Waiting")
@@ -262,7 +261,7 @@ class Luna:
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
                     print("failed no refresh-recover")
-                    driver.get(driver.current_url)
+                    driver.get("https://app.chime.aws")
                     #print("waiting round one")
                     #wait.until(EC.title_is("Amazon Chime")) #This has problems because the title (for whatever reason) is often changed to "(1) Amazon Chime" or some other number
                     print("Waiting")
@@ -305,7 +304,7 @@ class Luna:
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
                     print("failed no refresh-recover")
-                    driver.get(driver.current_url)
+                    driver.get("https://app.chime.aws")
                     #print("waiting round one")
                     #wait.until(EC.title_is("Amazon Chime")) #This has problems because the title (for whatever reason) is often changed to "(1) Amazon Chime" or some other number
                     print("Waiting")

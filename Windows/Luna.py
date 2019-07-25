@@ -10,7 +10,6 @@ from waits.message_loaded import message_loaded
 from waits.can_find import can_find
 from waits.can_find_css import can_find_css
 from waits.text_filled import text_filled
-import constants
 import commands
 import re
 import traceback
