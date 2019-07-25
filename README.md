@@ -57,6 +57,9 @@ Please note that this assumes you have:
 * Enter the email of the bot you wish to add.
 
 ## 6. Run your bot:
+* You will need to add the geckodriver/chromedriver file to your system's path.
+  - On Windows, search "path" into the windows search bar. Select "Edit the system environment variables" then "Environment Variables" then double click the line labeled "Path" on the top box. Select "add", then enter the file path to your root folder. Select "Ok" and close the windows.
+  - On Unix, simply run `export PATH=$PATH:/path/to/root/folder/.` 
 * Run `pip install -U selenium` to make sure you have the latest version of selenium
 * Run `pip install Boto3` to make sure you have the latest version of Boto3
 * Run `py Luna.py help` from the root folder for details on how to run your bot. If you're having an error saying "selenium not defined" or something, you've likely used pip from another python install (probably 2.X) and you'll need to use python 3's pip to install the previous two.
