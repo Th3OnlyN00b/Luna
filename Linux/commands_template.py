@@ -1,6 +1,5 @@
 import random
 import re
-import constants
 
 ###########################################################################################
 #   This is the file you should edit. The two methods below are the only required methods,#
