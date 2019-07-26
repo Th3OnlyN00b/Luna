@@ -10,7 +10,6 @@ from waits.message_loaded import message_loaded
 from waits.can_find import can_find
 from waits.can_find_css import can_find_css
 from waits.text_filled import text_filled
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import commands
 import re
 import traceback
@@ -172,8 +171,8 @@ class Luna:
                     print("found message list")
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     self.message_box = driver.find_element_by_class_name("notranslate.public-DraftEditor-content")
-                    print("Refined message: " + refined_message)
                     print("Did a no-refresh recover")
+                    pass
 
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
@@ -271,7 +270,7 @@ class Luna:
                     big_message_list = driver.find_element_by_class_name("ChatMessageList.ChatContainer__messagesList")
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     print("Did a refresh recover")
-                    self.send_message(commands.process_message(refined_message))
+                    self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
                     print("Processed message after refresh recover")
 
             
@@ -371,19 +370,21 @@ else:
 email_or_secret = arg5[1]
 pass_or_region = arg6[1]
 
-print("args verified")
+print("Args Verified!")
 
 if sys.argv[2].lower() == 'browser=chrome': #Select your browser (Maybe support other browsers in the future?)
     options = ChromeOptions()
     if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
         options.add_argument("--headless")
         options.add_argument("--window-size=1920x1080")
+    print("Creating webdriver...")
     driver = webdriver.Chrome(chrome_options=options)
+    print("Webdriver created!")
 else:
     options = FirefoxOptions()
     if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
         options.headless = True
-    print("creating webdriver")
+    print("Creating webdriver...")
     driver = webdriver.Firefox(options=options)
     print("Webdriver created!")
 
@@ -443,7 +444,6 @@ while driver.title.find("Amazon Chime") == -1: #We got captcha'd or one-time-pas
 
 print("Waiting until chat room list has loaded...")
 wait.until(can_find(driver, "SortableList.RoomList__items"))
-print("Chat room list has loaded.")
 chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
 bot = Luna(chat_room_name, driver, sys.argv[3].split('=')[1])
 bot.select_message_box()

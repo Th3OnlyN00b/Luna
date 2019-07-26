@@ -171,13 +171,13 @@ class Luna:
                     print("found message list")
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     self.message_box = driver.find_element_by_class_name("notranslate.public-DraftEditor-content")
-                    print("Refined message: " + refined_message)
                     print("Did a no-refresh recover")
+                    pass
 
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
                     print("failed no refresh-recover")
-                    driver.get(driver.current_url)
+                    driver.get("https://app.chime.aws")
                     #print("waiting round one")
                     #wait.until(EC.title_is("Amazon Chime")) #This has problems because the title (for whatever reason) is often changed to "(1) Amazon Chime" or some other number
                     print("Waiting")
@@ -260,7 +260,7 @@ class Luna:
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
                     print("failed no refresh-recover")
-                    driver.get(driver.current_url)
+                    driver.get("https://app.chime.aws")
                     #print("waiting round one")
                     #wait.until(EC.title_is("Amazon Chime")) #This has problems because the title (for whatever reason) is often changed to "(1) Amazon Chime" or some other number
                     print("Waiting")
@@ -303,7 +303,7 @@ class Luna:
                 #If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
                 except:
                     print("failed no refresh-recover")
-                    driver.get(driver.current_url)
+                    driver.get("https://app.chime.aws")
                     #print("waiting round one")
                     #wait.until(EC.title_is("Amazon Chime")) #This has problems because the title (for whatever reason) is often changed to "(1) Amazon Chime" or some other number
                     print("Waiting")
@@ -370,17 +370,23 @@ else:
 email_or_secret = arg5[1]
 pass_or_region = arg6[1]
 
+print("Args Verified!")
+
 if sys.argv[2].lower() == 'browser=chrome': #Select your browser (Maybe support other browsers in the future?)
     options = ChromeOptions()
     if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
         options.add_argument("--headless")
         options.add_argument("--window-size=1920x1080")
+    print("Creating webdriver...")
     driver = webdriver.Chrome(chrome_options=options)
+    print("Webdriver created!")
 else:
     options = FirefoxOptions()
     if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
         options.headless = True
+    print("Creating webdriver...")
     driver = webdriver.Firefox(options=options)
+    print("Webdriver created!")
 
 wait = WebDriverWait(driver, 100000) #Wait time-outs are stupid in this case. Just build better waits.
 
