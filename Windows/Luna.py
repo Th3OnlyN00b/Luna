@@ -22,6 +22,8 @@ import boto3
 import base64
 from botocore.exceptions import ClientError
 
+logging.basicConfig(filename='Luna.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+print("Logging configured!")
 
 def get_secret(secret_name, region_name):
 
@@ -373,23 +375,28 @@ pass_or_region = arg6[1]
 
 print("Args Verified!")
 
-if sys.argv[2].lower() == 'browser=chrome': #Select your browser (Maybe support other browsers in the future?)
-    options = ChromeOptions()
-    if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
-        options.add_argument("--headless")
-        options.add_argument("--window-size=1920x1080")
-    print("Creating webdriver...")
-    driver = webdriver.Chrome(chrome_options=options)
-    print("Webdriver created!")
-else:
-    options = FirefoxOptions()
-    if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
-        options.headless = True
-    print("Creating webdriver...")
-    driver = webdriver.Firefox(options=options)
-    print("Webdriver created!")
 
-wait = WebDriverWait(driver, 100000) #Wait time-outs are stupid in this case. Just build better waits.
+try:
+    if sys.argv[2].lower() == 'browser=chrome': #Select your browser (Maybe support other browsers in the future?)
+        options = ChromeOptions()
+        if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
+            options.add_argument("--headless")
+            options.add_argument("--window-size=1920x1080")
+        print("Creating webdriver...")
+        driver = webdriver.Chrome(chrome_options=options)
+        print("Webdriver created!")
+    else:
+        options = FirefoxOptions()
+        if sys.argv[1] == ('headless='+str(1)): #If headless, become the horseman
+            options.headless = True
+        print("Creating webdriver...")
+        driver = webdriver.Firefox(options=options)
+        print("Webdriver created!")
+
+    wait = WebDriverWait(driver, 100000) #Wait time-outs are stupid in this case. Just build better waits.
+except:
+    print(traceback.format_exc())
+    print("Could not create driver. Make sure you have installed the browser you're trying to use, have added this root folder to your path, and that you have at least 600 MB of free RAM.")
 
 email = ""
 password = ""
@@ -443,16 +450,21 @@ while driver.title.find("Amazon Chime") == -1: #We got captcha'd or one-time-pas
             print("Incorrect captcha")
             a += 1
 
-logging.basicConfig(filename='Luna.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-print("Logging configured!")
+chat_room_name = ""
 
-print("Waiting until chat room list has loaded...")
-wait.until(can_find(driver, "SortableList.RoomList__items"))
-chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
 while True:
     try:
+        print("Waiting until chat room list has loaded...")
+        wait.until(can_find(driver, "SortableList.RoomList__items"))
+        if chat_room_name == "" : 
+            chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
         bot = Luna(chat_room_name, driver, sys.argv[3].split('=')[1])
         bot.select_message_box()
         bot.respond_loops()
     except:
         logging.critical(traceback.format_exc())
+        try:
+            driver.get("https://app.chime.aws")
+        except: 
+            logging.critical(traceback.format_exc())
+            quit()
