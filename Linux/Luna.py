@@ -10,6 +10,7 @@ from waits.message_loaded import message_loaded
 from waits.can_find import can_find
 from waits.can_find_css import can_find_css
 from waits.text_filled import text_filled
+import logging
 import commands
 import re
 import traceback
@@ -442,9 +443,16 @@ while driver.title.find("Amazon Chime") == -1: #We got captcha'd or one-time-pas
             print("Incorrect captcha")
             a += 1
 
+logging.basicConfig(filename='Luna.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+print("Logging configured!")
+
 print("Waiting until chat room list has loaded...")
 wait.until(can_find(driver, "SortableList.RoomList__items"))
 chat_room_name = input("What is the name of the chat room you would like to add me to?\n")
-bot = Luna(chat_room_name, driver, sys.argv[3].split('=')[1])
-bot.select_message_box()
-bot.respond_loops()
+while True:
+    try:
+        bot = Luna(chat_room_name, driver, sys.argv[3].split('=')[1])
+        bot.select_message_box()
+        bot.respond_loops()
+    except:
+        logging.critical(traceback.format_exc())
