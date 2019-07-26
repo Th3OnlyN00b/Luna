@@ -430,7 +430,7 @@ while driver.title.find("Amazon Chime") == -1: #We got captcha'd or one-time-pas
         # action.key_down(Keys.TAB).key_up(Keys.TAB).key_down(Keys.TAB).key_up(Keys.TAB).key_down(Keys.SPACE).key_up(Keys.SPACE)
         # action.perform()
         # driver.find_element_by_id("auth-captcha-guess").send_keys(Keys.ENTER)
-        #driver.find_element_by_class_name("a-button-inner").click()
+        # driver.find_element_by_class_name("a-button-inner").click()
         time.sleep(3)
         if driver.title.find("Amazon Chime") == -1:
             print("Incorrect captcha")
