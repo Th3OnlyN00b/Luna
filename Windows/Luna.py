@@ -88,13 +88,20 @@ class Luna:
         self.driver.find_element_by_id("profile_primary_email").send_keys(email)
         self.driver.find_element_by_class_name("providers-emailSubmit").click()
 
-        # Fun fact, we don't actually need that button to load, we can just navigate there directly
-        self.driver.get("https://signin.id.ue1.app.chime.aws/auth/amazon")
+        # Gotta see if we're using an internal account:
+        time.sleep(3)
+        if self.driver.title.find("AWS Apps Authentication") != -1:
+            self.driver.find_element_by_id("wdc_username").send_keys(self.email[:-1*len("@amazon.com")])
+            self.driver.find_element_by_id("wdc_password").send_keys(self.password)
+            self.driver.find_element_by_id("wdc_login_button").click()
+        else:
+            # Fun fact, we don't actually need that button to load, we can just navigate there directly
+            self.driver.get("https://signin.id.ue1.app.chime.aws/auth/amazon")
 
-        # Log in to the actual login page
-        self.driver.find_element_by_id("ap_email").send_keys(email)
-        self.driver.find_element_by_id("ap_password").send_keys(password)
-        self.driver.find_element_by_id("signInSubmit").click()
+            # Log in to the actual login page
+            self.driver.find_element_by_id("ap_email").send_keys(email)
+            self.driver.find_element_by_id("ap_password").send_keys(password)
+            self.driver.find_element_by_id("signInSubmit").click()
 
         # Chill for a minute to let the page load
         time.sleep(3)
