@@ -10,6 +10,8 @@ class message_loaded(object):
         if len(messages) == 0:
             return False
         message_text = messages[-1].get_attribute('innerHTML')
+        if message_text == None:
+            return False
         message_pieces = message_text.split("\"")
         if message_pieces[1] == "TypingIndicator":
             return False
