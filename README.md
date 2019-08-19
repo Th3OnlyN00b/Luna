@@ -71,9 +71,13 @@ Please note that this assumes you have:
 * Your bot should be running now. Enjoy yourself!
 
 ## Notes about running on AWS:
-* If you're planning to make a bot persist using AWS, Luna itself can run on a t2.micro ubuntu or linux instance, the same instance which is elegable for the free tier. In programming your bot, it is good practice to not exceed this requirement, and make any process heavy calls to AWS Lambda functions. For async calls such as those, be sure to make use of the `message_sender` function which is a param in both `process_raw` and `process_message`, unless you want to stall your bot until the function call completes.  
+* If you're planning to make a bot persist using AWS, Luna itself can run on anything with more than one gig of ram such as a t2.small ubuntu or linux instance. You can also run it on a t2.micro (the same instance which is elegable for the free tier), but only for a short time (about 24-36 hours) because the browser builds a cache which knocks it over the 1gb ram limit. In programming your bot, it is good practice to not exceed 1.5 gigs in total (leaving 0.5 for your bot), and make any process heavy calls to AWS Lambda functions. For async calls such as those, be sure to make use of the `message_sender` function which is a param in both `process_raw` and `process_message`, unless you want to stall your bot until the function call completes.  
 
 ## TODO:
 * Setup away message functionality (User can use the bot on their own account to have it auto-reply to users with a preset message i.e. "I'm not in the office right now, and will be back on 9-13-19."
-* Display chat room names before asking for the name of the chat room to join
-* Ocassionally when signing into a account from a new location, chime wants you to enter a one-time password. We need to implement a way to handle this. I've included the HTML files.
+* Try to find a way to clear browser cache as to not use that much ram
+
+## Updates: 
+* Added one-time-password functionality!
+* Luna now prints the names of all availible chat rooms before asking user to choose a room
+* Added support for asynchronous functions
