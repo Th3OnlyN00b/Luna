@@ -354,4 +354,8 @@ while True:
         quit()
     except:
         logging.error(traceback.format_exc())
+        try: 
+            bot.driver.quit()
+        except:
+            pass
         continue
