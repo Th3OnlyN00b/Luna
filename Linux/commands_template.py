@@ -9,6 +9,10 @@ import re
 #   The args for both functions are as follows:                                           # 
 #       msg: the message recieved by the bot.                                             #
 #       bot_name: the bot's name (for convenience)                                        #
+#       message_author: The Chime name of the Chime user who sent the message. Will hold  #
+#           the value "Unknown" if Sola is not able to determine who sent the message.    #
+#       message_author_email: The email of the Chime user who send the message. Will hold #
+#           the value "Unknown" if Sola is not able to determine who sent the message.    #
 #       message_sender: this is a function which you can call on a string to have your    #
 #           bot send that message. This is used to respond to async calls, such as calls  #
 #           to AWS Lambda functions.                                                      #
@@ -23,7 +27,7 @@ import re
 #   Go have fun and make some bots!                                                       #
 ###########################################################################################
 
-def process_message(msg, bot_name, message_sender):
+def process_message(msg, bot_name, message_author, message_author_email, message_sender):
         
     print("Msg:\n" + msg)
     msg = cleanup_message(msg) #Not required, but highly recommended.
@@ -71,7 +75,7 @@ My current commands are:
 #   sent in the chat.                                                                     #
 ###########################################################################################
 
-def process_raw(msg, bot_name, message_sender):
+def process_raw(msg, bot_name, message_author, message_author_email, message_sender):
     #If message meant for bot:
 
     #respond to messages here

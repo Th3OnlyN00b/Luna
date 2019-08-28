@@ -93,7 +93,6 @@ class Luna:
         if self.driver.title.find("AWS Apps Authentication") != -1:
             self.driver.find_element_by_id("wdc_username").send_keys(self.email[:-1*len("@amazon.com")])
             self.driver.find_element_by_id("wdc_password").send_keys(self.password)
-            self.driver.find_element_by_id("wdc_login_button").click()
         else:
             # Fun fact, we don't actually need that button to load, we can just navigate there directly
             self.driver.get("https://signin.id.ue1.app.chime.aws/auth/amazon")
@@ -174,6 +173,28 @@ class Luna:
             if self.dev: print(traceback.format_exc())
             if self.dev: print("Failed to send message, most likely because the message_box reference died.")
 
+    def get_info(self):
+        info = {}
+        try:
+            message_list = self.driver.find_element_by_class_name("ChatMessageList.ChatContainer__messagesList").find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
+            try:
+                messages = message_list.find_elements_by_class_name("ChatMessageList__messageContainer")
+                info["message_sender"] = senders[-1].get_attribute("innerHTML").split("<")[0]
+                info["message_sender_email"] = senders[-1].get_attribute("data-email")
+            except:
+                info["message_sender"] = "Unknown"
+                info["message_sender_email"] = "Unknown"
+            try:
+                senders = message_list.find_elements_by_class_name("ChatMessage__sender")
+                info["message_text"] = messages[-1].find_element_by_class_name("Linkify").get_attribute("innerHTML")
+            except:
+                info["message_text"] = "Unknown"
+        except:
+                info["message_sender"] = "Unknown"
+                info["message_sender_email"] = "Unknown"
+                info["message_text"] = "Unknown"
+        return info
+
     def respond_loops(self):
         #send_message(message_box, "I'm alive!") # For whatever reason, sending messages right before checking breaks it.
         big_message_list = self.driver.find_element_by_class_name("ChatMessageList.ChatContainer__messagesList")
@@ -230,7 +251,6 @@ class Luna:
             
             #### Get more intelligent error handling. If you have to refresh the page from here, you still have the message to reply to. Do something with it
 
-
             #Message handling
             start = message_text.find('<span class="Linkify">')
             end = message_text[start:].find('</span>')+start
@@ -252,21 +272,24 @@ class Luna:
                     else:
                         #If people do "@BotName whatever"
                         if raw_message[start+len('</span>')] == " ":
+                            values = self.get_info()
                             refined_message = raw_message[start+len('</span> '):end]
-                            self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
+                            self.send_message(commands.process_message(refined_message, self.bot_name, values["message_sender"], values["message_sender_email"], self.send_message))
                         #If people don't put a space after '@BotName' i.e. "@BotName, hello"
                         else:
                             real_start = raw_message[start:].find(' ')
                             refined_message = raw_message[start+real_start+1:end]
-                            self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
+                            values = self.get_info()
+                            self.send_message(commands.process_message(refined_message, self.bot_name, values["message_sender"], values["message_sender_email"], self.send_message))
                 
                 #### Non-command responses ####
                 else: 
-                    line = commands.process_raw(msg_or_at, self.bot_name, self.send_message)
+                    line = commands.process_raw(msg_or_at, self.bot_name, values["message_sender"], values["message_sender_email"], self.send_message)
                     if len(line) == 0:
                         message_sent = False
                     else:
                         self.send_message(line)
+
             except Exception as e: # Backup refresher in the event of environmental, social, economic, or structural collapse.
                 if self.dev: print("I ERRORED while parsing messages")
                 if self.dev: print(traceback.format_exc())
@@ -278,7 +301,7 @@ class Luna:
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     if self.dev: print("Refined message: " + refined_message)
                     if self.dev: print("Did a no-refresh recover")
-                    self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
+                    self.send_message(commands.process_message(refined_message, self.bot_name, values["message_sender"], values["message_sender_email"], self.send_message))
                     if self.dev: print("Processed message after no-refresh recover")
 
                 # If that didn't work, we'll be forced to do a complete refresh of the page. This is not ideal, but fixes any whacky browser errors
@@ -292,7 +315,7 @@ class Luna:
                     big_message_list = self.driver.find_element_by_class_name("ChatMessageList.ChatContainer__messagesList")
                     message_list = big_message_list.find_element_by_class_name("ChatMessageList__messagesWrapper.ChatMessageList__messagesWrapper--shortReadReceipt")
                     if self.dev: print("Did a refresh recover")
-                    self.send_message(commands.process_message(refined_message, self.bot_name, self.send_message))
+                    self.send_message(commands.process_message(refined_message, self.bot_name, values["message_sender"], values["message_sender_email"], self.send_message))
                     if self.dev: print("Processed message after refresh recover")
 
             
